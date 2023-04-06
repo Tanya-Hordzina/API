@@ -1,0 +1,50 @@
+{
+   "name":"Tatsiana",
+   "surname":"Hordzina",
+   "dateOfBirth":{
+      "day":15,
+      "month":3,
+      "year":1990
+   },
+   "position":"QA engineer",
+   "gender":"female",
+   "email":"ts_hordzina@gmail.com",
+   "telegram_contact":"@Gord_tanya",
+   "education":{
+      "university":"Belarusian National Technical University",
+      "start":2008,
+      "finish":2013,
+      "speciality":"buiding_ingeener"
+   },
+   "post_education":[
+      {
+         "name":"BelHardacademy",
+         "course":"Software testing. Basic level",
+         "date":"january-february_2023"
+      },
+      {
+         "name":"BelHardacademy",
+         "course":"Software testing. Professional level",
+         "date":"in_progress"
+      }
+   ]"languages":[
+      {
+         "language":"Russian",
+         "level":"native"
+      },
+      {
+         "language":"English",
+         "level":"A2"
+      }
+   ],
+   "skills":[
+      "Types and levels in software testing",
+      "Test Design Techniques",
+      "Development of test documentation",
+      "WEB Application Testing",
+      "Mobile Application Testing Basics",
+      "REST API Testing",
+      "SQL Basics for Testing",
+      "Command line and Git"
+   ]
+}
