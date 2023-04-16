@@ -13,6 +13,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"auth1\",jsonData.access_token);\r",
+							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});"
@@ -69,6 +72,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"task_id\",jsonData.data.id);\r",
+							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
@@ -92,7 +98,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "ZTc4N2NhYzkzYmZkNjAyYTUzZTFhY2FiNGM0M2Y3YzRmZTg1ZWRlZWRhNjgxN2I2NzczMTk2MDk0MTU2YWUwNg",
+							"value": "{{auth1}}",
 							"type": "string"
 						}
 					]
@@ -133,7 +139,7 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							" pm.response.to.have.status(200);\r",
 							"});\r",
 							"pm.test(\"Описание задачи\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"product description\");\r",
@@ -149,7 +155,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "ZTc4N2NhYzkzYmZkNjAyYTUzZTFhY2FiNGM0M2Y3YzRmZTg1ZWRlZWRhNjgxN2I2NzczMTk2MDk0MTU2YWUwNg",
+							"value": "{{auth1}}",
 							"type": "string"
 						}
 					]
@@ -166,7 +172,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/1009618",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -177,7 +183,7 @@
 						"api",
 						"v3",
 						"task",
-						"1009618"
+						"{{task_id}}"
 					]
 				}
 			},
@@ -190,6 +196,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"auth2\",jsonData.access_token);\r",
+							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});"
@@ -263,7 +272,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "OTdhMDU3NTUyODI3YjZhZDUxNzJmOTllNmQ3NTA2NzVlZDMzMmUyYzcyOGQyZmRjYmU2Yzc3YzA4M2EwYjE0NQ",
+							"value": "{{auth2}}",
 							"type": "string"
 						}
 					]
@@ -280,7 +289,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/1009618/doAction",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}/doAction",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -291,7 +300,7 @@
 						"api",
 						"v3",
 						"task",
-						"1009618",
+						"{{task_id}}",
 						"doAction"
 					]
 				}
@@ -322,7 +331,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "OTdhMDU3NTUyODI3YjZhZDUxNzJmOTllNmQ3NTA2NzVlZDMzMmUyYzcyOGQyZmRjYmU2Yzc3YzA4M2EwYjE0NQ",
+							"value": "{{auth2}}",
 							"type": "string"
 						}
 					]
@@ -339,7 +348,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/1009618/doAction",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}/doAction",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -350,7 +359,7 @@
 						"api",
 						"v3",
 						"task",
-						"1009618",
+						"{{task_id}}",
 						"doAction"
 					]
 				}
@@ -381,7 +390,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "OTdhMDU3NTUyODI3YjZhZDUxNzJmOTllNmQ3NTA2NzVlZDMzMmUyYzcyOGQyZmRjYmU2Yzc3YzA4M2EwYjE0NQ",
+							"value": "{{auth2}}",
 							"type": "string"
 						}
 					]
@@ -398,7 +407,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/1009618/comments",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}/comments",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -409,64 +418,8 @@
 						"api",
 						"v3",
 						"task",
-						"1009618",
+						"{{task_id}}",
 						"comments"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "auth employee 1 (2)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "Exploratory1@1.1",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "Exploratory1@1.1",
-							"type": "text"
-						},
-						{
-							"key": "grant_type",
-							"value": "password",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/auth/access_token",
-					"protocol": "https",
-					"host": [
-						"radio-shop",
-						"megaplan",
-						"by"
-					],
-					"path": [
-						"api",
-						"v3",
-						"auth",
-						"access_token"
 					]
 				}
 			},
@@ -496,7 +449,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "ZmI3MWNiZjhlOTc5Yzk0N2VkNWIzYzRkMmQ1MWU1ZjUxNjQyYjA1ZmNlZDY3YTE2OTA2Y2UxMDcxN2I3YTRhZQ",
+							"value": "{{auth1}}",
 							"type": "string"
 						}
 					]
@@ -513,7 +466,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/1009618/doAction",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}/doAction",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -524,7 +477,7 @@
 						"api",
 						"v3",
 						"task",
-						"1009618",
+						"{{task_id}}",
 						"doAction"
 					]
 				}
@@ -541,7 +494,7 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Наличие текста\", function () {\r",
+							"pm.test(\"Messege\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"Task successfully removed\");\r",
 							"});"
 						],
@@ -555,7 +508,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "ZmI3MWNiZjhlOTc5Yzk0N2VkNWIzYzRkMmQ1MWU1ZjUxNjQyYjA1ZmNlZDY3YTE2OTA2Y2UxMDcxN2I3YTRhZQ",
+							"value": "{{auth1}}",
 							"type": "string"
 						}
 					]
@@ -572,7 +525,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/1009618",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -583,7 +536,7 @@
 						"api",
 						"v3",
 						"task",
-						"1009618"
+						"{{task_id}}"
 					]
 				}
 			},
