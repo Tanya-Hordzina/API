@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cef10c16-2e3d-4d4d-83e5-9f7c830e6643",
+		"_postman_id": "4dc0f134-b78a-47a1-bad6-bd368a025b95",
 		"name": "HW 1 (basic)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25863808"
@@ -8,17 +8,20 @@
 	"item": [
 		{
 			"name": "auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"access_token_1\", jsonData.access_token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "ZTc4N2NhYzkzYmZkNjAyYTUzZTFhY2FiNGM0M2Y3YzRmZTg1ZWRlZWRhNjgxN2I2NzczMTk2MDk0MTU2YWUwNg",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -60,23 +63,32 @@
 			"response": []
 		},
 		{
-			"name": "new product",
+			"name": "New product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"id_1\", jsonData.data.id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "ZTc4N2NhYzkzYmZkNjAyYTUzZTFhY2FiNGM0M2Y3YzRmZTg1ZWRlZWRhNjgxN2I2NzczMTk2MDk0MTU2YWUwNg",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token_1}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "         {\r\n            \"contentType\": \"Offer\",\r\n            \"name\": \"Товар Обыкновенный\",\r\n             \"article\": \"АРТ1\",\r\n            \"unit\": {\r\n                \"contentType\": \"Unit\",\r\n                \"id\": \"12\"\r\n            },\r\n            \"price\": {\r\n                \"contentType\": \"Money\",\r\n                \"currency\": \"USD\",\r\n                \"value\": 100\r\n            },\r\n            \"tax\": {\r\n                \"contentType\": \"Tax\",\r\n                \"id\": \"2\"\r\n            }\r\n        }",
+					"raw": " {\r\n            \"contentType\": \"Offer\",\r\n            \"name\": \"Товар Обыкновенный\",\r\n             \"article\": \"АРТ1\",\r\n            \"unit\": {\r\n                \"contentType\": \"Unit\",\r\n                \"id\": \"12\"\r\n            },\r\n            \"price\": {\r\n                \"contentType\": \"Money\",\r\n                \"currency\": \"USD\",\r\n                \"value\": 100\r\n            },\r\n            \"tax\": {\r\n                \"contentType\": \"Tax\",\r\n                \"id\": \"2\"\r\n            }\r\n        }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,22 +113,50 @@
 			"response": []
 		},
 		{
-			"name": "GET offer by ID",
+			"name": "Get offer by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Name\", function () {\r",
+							"    pm.expect(pm.response.json().data.name).to.equal(\"Товар Обыкновенный\");\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Article\", function () {\r",
+							"    pm.expect(pm.response.json().data.article).to.equal(\"АРТ1\");\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"value\", function () {\r",
+							"    pm.expect(pm.response.json().data.price.value).to.equal(100);\r",
+							"    });\r",
+							"\r",
+							"   pm.test(\"currency\", function () {\r",
+							"    pm.expect(pm.response.json().data.price.currency).to.equal(\"USD\");\r",
+							"    });\r",
+							" \r",
+							"pm.test(\"tax\", function () {\r",
+							"    pm.expect(pm.response.json().data.tax.name).to.equal(\"10 %\");\r",
+							"    });\r",
+							"    \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "ZTc4N2NhYzkzYmZkNjAyYTUzZTFhY2FiNGM0M2Y3YzRmZTg1ZWRlZWRhNjgxN2I2NzczMTk2MDk0MTU2YWUwNg",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token_1}}",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/offer/2871",
+					"raw": "https://radio-shop.megaplan.by/api/v3/offer/{{id_1}}",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -127,7 +167,7 @@
 						"api",
 						"v3",
 						"offer",
-						"2871"
+						"{{id_1}}"
 					]
 				}
 			},
@@ -135,13 +175,31 @@
 		},
 		{
 			"name": "Update offer ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Name\", function () {\r",
+							"    pm.expect(pm.response.json().data.name).to.equal(\"Товар Необыкновенный\");\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"value\", function () {\r",
+							"    pm.expect(pm.response.json().data.price.value).to.equal(1000);\r",
+							"    });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "ZTc4N2NhYzkzYmZkNjAyYTUzZTFhY2FiNGM0M2Y3YzRmZTg1ZWRlZWRhNjgxN2I2NzczMTk2MDk0MTU2YWUwNg",
+							"value": "{{access_token_1}}",
 							"type": "string"
 						}
 					]
@@ -158,7 +216,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/offer/2871",
+					"raw": "https://radio-shop.megaplan.by/api/v3/offer/{{id_1}}",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -169,7 +227,7 @@
 						"api",
 						"v3",
 						"offer",
-						"2871"
+						"{{id_1}}"
 					]
 				}
 			},
@@ -183,7 +241,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "ZTc4N2NhYzkzYmZkNjAyYTUzZTFhY2FiNGM0M2Y3YzRmZTg1ZWRlZWRhNjgxN2I2NzczMTk2MDk0MTU2YWUwNg",
+							"value": "{{access_token_1}}",
 							"type": "string"
 						}
 					]
@@ -200,7 +258,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/offer/2871",
+					"raw": "https://radio-shop.megaplan.by/api/v3/offer/{{id_1}}",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -211,7 +269,7 @@
 						"api",
 						"v3",
 						"offer",
-						"2871"
+						"{{id_1}}"
 					]
 				}
 			},
@@ -219,13 +277,26 @@
 		},
 		{
 			"name": "GET remote product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "ZTc4N2NhYzkzYmZkNjAyYTUzZTFhY2FiNGM0M2Y3YzRmZTg1ZWRlZWRhNjgxN2I2NzczMTk2MDk0MTU2YWUwNg",
+							"value": "{{access_token_1}}",
 							"type": "string"
 						}
 					]
@@ -233,7 +304,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/offer/2871",
+					"raw": "https://radio-shop.megaplan.by/api/v3/offer/{{id_1}}",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -244,11 +315,21 @@
 						"api",
 						"v3",
 						"offer",
-						"2871"
+						"{{id_1}}"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token_1",
+			"value": ""
+		},
+		{
+			"key": "id_1",
+			"value": ""
 		}
 	]
 }
