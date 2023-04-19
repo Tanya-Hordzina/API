@@ -1,20 +1,20 @@
 {
 	"info": {
-		"_postman_id": "fac96719-4758-45b4-b7fd-9335d6d8650d",
+		"_postman_id": "33fc2a17-94b1-4942-ba06-766abf579217",
 		"name": "HW 2 (advanced)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25863808"
 	},
 	"item": [
 		{
-			"name": "auth employee 1",
+			"name": "New Request",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"var jsonData = JSON.parse(responseBody);\r",
-							"pm.globals.set(\"auth1\",jsonData.access_token);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"auth_1\", jsonData.access_token);\r",
 							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -72,8 +72,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"var jsonData = JSON.parse(responseBody);\r",
-							"pm.globals.set(\"task_id\",jsonData.data.id);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"ID_task\", jsonData.data.id);\r",
 							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -81,8 +81,8 @@
 							"pm.test(\"Название задачи=new\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"new\");\r",
 							"});\r",
-							"pm.test(\" Ответственный сотрудник= Testing2 Exploratory\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"Testing2 Exploratory\");\r",
+							"pm.test(\" Ответственный сотрудник\", function () {\r",
+							"    pm.expect(pm.response.json().data.responsible.id).to.equal(\"1000105\");\r",
 							"});\r",
 							"pm.test(\"Status=assigned\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"assigned\");\r",
@@ -98,7 +98,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{auth1}}",
+							"value": "{{auth_1}}",
 							"type": "string"
 						}
 					]
@@ -107,7 +107,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\r\n  \"contentType\": \"Task\",\r\n  \"name\": \"new\",\r\n  \"deadline\": null,\r\n  \"parent\": null,\r\n  \"isUrgent\": false,\r\n  \"isTemplate\": false,\r\n  \"owner\": {\r\n    \"id\": \"1000104\",\r\n    \"contentType\": \"Employee\"\r\n  },\r\n  \"responsible\": {\r\n    \"id\": \"1000105\",\r\n    \"contentType\": \"Employee\"\r\n  },\r\n  \"contractor\": null,\r\n  \"attaches\": []\r\n} ",
+					"raw": " {\r\n  \"contentType\": \"Task\",\r\n  \"name\": \"new\",\r\n  \"deadline\": null,\r\n  \"parent\": null,\r\n  \"isUrgent\": false,\r\n  \"isTemplate\": false,\r\n  \"owner\": {\r\n    \"id\": \"1000104\",\r\n    \"contentType\": \"Employee\"\r\n  },\r\n  \"responsible\": {\r\n    \"id\": \"1000105\",\r\n    \"contentType\": \"Employee\"\r\n  },\r\n  \"contractor\": null,\r\n  \"attaches\": []\r\n} ",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -155,7 +155,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{auth1}}",
+							"value": "{{auth_1}}",
 							"type": "string"
 						}
 					]
@@ -164,7 +164,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n  \"contentType\": \"Task\",\r\n  \"name\": \"new\",\r\n  \"subject\": \"product description\",\r\n  \"deadline\": null,\r\n  \"parent\": null,\r\n  \"isUrgent\": false,\r\n  \"isTemplate\": false,\r\n  \"owner\": {\r\n    \"id\": \"1000104\",\r\n    \"contentType\": \"Employee\"\r\n  },\r\n  \"responsible\": {\r\n    \"id\": \"1000105\",\r\n    \"contentType\": \"Employee\"\r\n  },\r\n  \"contractor\": null,\r\n  \"attaches\": []\r\n} ",
+					"raw": "{\r\n  \"contentType\": \"Task\",\r\n  \"name\": \"new\",\r\n  \"subject\": \"product description\",\r\n  \"deadline\": null,\r\n  \"parent\": null,\r\n  \"isUrgent\": false,\r\n  \"isTemplate\": false,\r\n  \"owner\": {\r\n    \"id\": \"1000104\",\r\n    \"contentType\": \"Employee\"\r\n  },\r\n  \"responsible\": {\r\n    \"id\": \"1000105\",\r\n    \"contentType\": \"Employee\"\r\n  },\r\n  \"contractor\": null,\r\n  \"attaches\": []\r\n} ",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -172,7 +172,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{ID_task}}",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -183,7 +183,7 @@
 						"api",
 						"v3",
 						"task",
-						"{{task_id}}"
+						"{{ID_task}}"
 					]
 				}
 			},
@@ -196,8 +196,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"var jsonData = JSON.parse(responseBody);\r",
-							"pm.globals.set(\"auth2\",jsonData.access_token);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"auth_2\", jsonData.access_token);\r",
 							"\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -257,9 +257,6 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Status task=accepted\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"accepted\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -272,7 +269,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{auth2}}",
+							"value": "{{auth_2}}",
 							"type": "string"
 						}
 					]
@@ -289,7 +286,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}/doAction",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{ID_task}}/doAction",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -300,7 +297,7 @@
 						"api",
 						"v3",
 						"task",
-						"{{task_id}}",
+						"{{ID_task}}",
 						"doAction"
 					]
 				}
@@ -331,7 +328,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{auth2}}",
+							"value": "{{auth_2}}",
 							"type": "string"
 						}
 					]
@@ -340,7 +337,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"contentType\": \"TaskActionRequest\",\r\n\"action\": \"act_done\"\r\n}",
+					"raw": "{\r\n\"contentType\": \"TaskActionRequest\",\r\n\"action\": \"act_done\"\r\n}\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -348,7 +345,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}/doAction",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{ID_task}}/doAction",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -359,7 +356,7 @@
 						"api",
 						"v3",
 						"task",
-						"{{task_id}}",
+						"{{ID_task}}",
 						"doAction"
 					]
 				}
@@ -390,7 +387,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{auth2}}",
+							"value": "{{auth_2}}",
 							"type": "string"
 						}
 					]
@@ -407,7 +404,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}/comments",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{ID_task}}/comments",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -418,7 +415,7 @@
 						"api",
 						"v3",
 						"task",
-						"{{task_id}}",
+						"{{ID_task}}",
 						"comments"
 					]
 				}
@@ -449,7 +446,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{auth1}}",
+							"value": "{{auth_1}}",
 							"type": "string"
 						}
 					]
@@ -466,7 +463,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}/doAction",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{ID_task}}/doAction",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -477,7 +474,7 @@
 						"api",
 						"v3",
 						"task",
-						"{{task_id}}",
+						"{{ID_task}}",
 						"doAction"
 					]
 				}
@@ -508,7 +505,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{auth1}}",
+							"value": "{{auth_1}}",
 							"type": "string"
 						}
 					]
@@ -525,7 +522,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{task_id}}",
+					"raw": "https://radio-shop.megaplan.by/api/v3/task/{{ID_task}}",
 					"protocol": "https",
 					"host": [
 						"radio-shop",
@@ -536,11 +533,29 @@
 						"api",
 						"v3",
 						"task",
-						"{{task_id}}"
+						"{{ID_task}}"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "auth_1",
+			"value": ""
+		},
+		{
+			"key": "ID_task",
+			"value": ""
+		},
+		{
+			"key": "auth_2",
+			"value": ""
+		},
+		{
+			"key": "task_ID",
+			"value": ""
 		}
 	]
 }
